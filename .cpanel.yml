@@ -6,7 +6,7 @@ deployment:
     # NOTE: Replace 'YOUR_CPANEL_USERNAME' with your actual cPanel username
     # Example: export DEPLOYPATH=/home/cabecs/public_html/
     # --------------------------------------------------------------------------
-    - export DEPLOYPATH=/home/YOUR_CPANEL_USERNAME/public_html/
+    - export DEPLOYPATH=/home/cabecs/public_html/
     
     # Ensure destination directory exists
     - /bin/mkdir -p $DEPLOYPATH
