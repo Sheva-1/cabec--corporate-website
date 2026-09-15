@@ -1,3 +1,5 @@
+export type Language = 'fr' | 'en';
+
 export type ServicePillarId = 
   | 'conseil-strategie'
   | 'solutions-digitales'
@@ -23,6 +25,14 @@ export interface ServicePillar {
   accentColor: string;
   badge: string;
   services: ServiceItem[];
+}
+
+export interface MethodStep {
+  step: string;
+  title: string;
+  timeframe: string;
+  desc: string;
+  deliverable: string;
 }
 
 export interface CaseStudy {

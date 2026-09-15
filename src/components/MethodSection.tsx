@@ -1,5 +1,6 @@
 import React from 'react';
-import { METHOD_STEPS } from '../data/cabecData';
+import { motion } from 'motion/react';
+import { useLanguage } from '../context/LanguageContext';
 import { Layers, ArrowRight, ShieldCheck, Check } from 'lucide-react';
 
 interface MethodSectionProps {
@@ -7,29 +8,42 @@ interface MethodSectionProps {
 }
 
 export const MethodSection: React.FC<MethodSectionProps> = ({ onOpenConsultation }) => {
+  const { t, currentMethodSteps } = useLanguage();
+
   return (
     <section id="methode" className="py-16 md:py-24 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto space-y-3 mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-[#0066B3] text-xs font-bold uppercase tracking-wider">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-40px" }}
+          transition={{ duration: 0.5 }}
+          className="text-center max-w-3xl mx-auto space-y-3 mb-16"
+        >
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-blue-50 text-[#0066B3] text-xs font-bold uppercase tracking-wider">
             <Layers className="w-3.5 h-3.5" />
-            <span>Processus & Rigueur d'Intervention</span>
+            <span>{t('method.badge')}</span>
           </div>
           <h2 className="font-['Outfit',sans-serif] text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900">
-            Une Méthodologie Éprouvée en 4 Jalons
+            {t('method.title')}
           </h2>
           <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
-            Chaque mission CABEC suit un cycle de vie rigoureux pour garantir le respect strict des délais, des budgets et l'appropriation durable par vos équipes.
+            {t('method.subtitle')}
           </p>
-        </div>
+        </motion.div>
 
         {/* Steps Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 relative">
-          {METHOD_STEPS.map((step, index) => (
-            <div 
+          {currentMethodSteps.map((step, index) => (
+            <motion.div 
               key={step.step}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.45, delay: index * 0.1 }}
+              whileHover={{ y: -4 }}
               className="bg-[#F8FAFC] rounded-2xl p-6 border border-slate-200/80 hover:border-[#0066B3]/50 hover:shadow-md transition-all flex flex-col justify-between group"
             >
               <div className="space-y-4">
@@ -58,40 +72,48 @@ export const MethodSection: React.FC<MethodSectionProps> = ({ onOpenConsultation
               <div className="pt-6 mt-6 border-t border-slate-200/80">
                 <div className="text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1.5 flex items-center gap-1.5">
                   <Check className="w-3.5 h-3.5 text-[#4F8B50]" />
-                  <span>Livrable contractuel</span>
+                  <span>{t('method.deliverableTag')}</span>
                 </div>
                 <div className="text-xs font-semibold text-slate-800 bg-white p-2.5 rounded-lg border border-slate-200/70 shadow-2xs">
                   {step.deliverable}
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
 
         {/* Bottom Assurance Banner */}
-        <div className="mt-12 bg-slate-900 text-white rounded-2xl p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6 shadow-lg">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="mt-12 bg-slate-900 text-white rounded-2xl p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6 shadow-lg"
+        >
           <div className="flex items-center gap-4">
             <div className="p-3 rounded-xl bg-blue-600/20 text-[#38BDF8] shrink-0">
               <ShieldCheck className="w-8 h-8" />
             </div>
             <div>
               <h4 className="font-['Outfit',sans-serif] text-base sm:text-lg font-bold text-white">
-                Engagement de Gouvernance & Accord de Confidentialité (NDA)
+                {t('method.ndaTitle')}
               </h4>
               <p className="text-xs sm:text-sm text-slate-300">
-                Toutes nos interventions font l'objet d'accords contractuels stricts protégeant votre savoir-faire et vos données métier.
+                {t('method.ndaDesc')}
               </p>
             </div>
           </div>
 
-          <button
+          <motion.button
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.97 }}
             onClick={onOpenConsultation}
-            className="inline-flex items-center gap-2 bg-[#0066B3] hover:bg-[#005291] text-white text-xs sm:text-sm font-semibold px-5 py-3 rounded-xl shrink-0 transition-all active:scale-95"
+            className="inline-flex items-center gap-2 bg-[#0066B3] hover:bg-[#005291] text-white text-xs sm:text-sm font-semibold px-5 py-3 rounded-xl shrink-0 transition-all cursor-pointer"
           >
-            <span>Démarrer un cadrage</span>
+            <span>{t('method.cta')}</span>
             <ArrowRight className="w-4 h-4" />
-          </button>
-        </div>
+          </motion.button>
+        </motion.div>
 
       </div>
     </section>

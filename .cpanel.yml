@@ -1,0 +1,18 @@
+---
+deployment:
+  tasks:
+    # --------------------------------------------------------------------------
+    # CABECS Production Deployment Configuration for cPanel Git Version Control
+    # NOTE: Replace 'YOUR_CPANEL_USERNAME' with your actual cPanel username
+    # Example: export DEPLOYPATH=/home/cabecs/public_html/
+    # --------------------------------------------------------------------------
+    - export DEPLOYPATH=/home/YOUR_CPANEL_USERNAME/public_html/
+    
+    # Ensure destination directory exists
+    - /bin/mkdir -p $DEPLOYPATH
+    
+    # 1. Copy all compiled static production assets (HTML, JS, CSS, images, icons, sitemap)
+    - /bin/cp -R dist/* $DEPLOYPATH
+    
+    # 2. Copy the critical Apache .htaccess for SPA routing and HTTPS redirection
+    - /bin/cp dist/.htaccess $DEPLOYPATH

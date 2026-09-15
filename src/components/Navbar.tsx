@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
 import { Logo } from './Logo';
-import { COMPANY_INFO } from '../data/cabecData';
+import { LanguageSelector } from './LanguageSelector';
+import { useLanguage } from '../context/LanguageContext';
 import { 
   Phone, 
   Mail, 
@@ -18,6 +20,7 @@ interface NavbarProps {
 }
 
 export const Navbar: React.FC<NavbarProps> = ({ onOpenConsultation }) => {
+  const { t, currentPillars, companyInfo } = useLanguage();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [servicesDropdownOpen, setServicesDropdownOpen] = useState(false);
@@ -31,25 +34,17 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenConsultation }) => {
   }, []);
 
   const navItems = [
-    { label: 'Accueil', href: '#hero' },
+    { label: t('nav.home'), href: '#hero' },
     { 
-      label: 'Expertises', 
+      label: t('nav.expertises'), 
       href: '#poles',
       hasDropdown: true
     },
-    { label: 'Méthodologie', href: '#methode' },
-    { label: 'Réalisations', href: '#realisations' },
-    { label: 'Diagnostic', href: '#diagnostic' },
-    { label: 'FAQ', href: '#faq' },
-    { label: 'Contact', href: '#contact' },
-  ];
-
-  const pillarsSubmenu = [
-    { id: 'conseil-strategie', title: 'Conseil & Stratégie', desc: 'Management, organisation & gouvernance' },
-    { id: 'solutions-digitales', title: 'Solutions Digitales & Systèmes', desc: 'Logiciels, applications mobiles & web' },
-    { id: 'gestion-projets', title: 'Gestion de Projets & S&E', desc: 'Suivi-évaluation & pilotage de programmes' },
-    { id: 'formations', title: 'Formation Professionnelle', desc: 'Académie CABEC & perfectionnement cadres' },
-    { id: 'immobilier', title: 'Immobilier d’Entreprise', desc: 'Investissement & sécurisation foncière' },
+    { label: t('nav.methodology'), href: '#methode' },
+    { label: t('nav.caseStudies'), href: '#realisations' },
+    { label: t('nav.diagnostic'), href: '#diagnostic' },
+    { label: t('nav.faq'), href: '#faq' },
+    { label: t('nav.contact'), href: '#contact' },
   ];
 
   return (
@@ -61,43 +56,50 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenConsultation }) => {
           <div className="flex items-center gap-4 text-[11px] sm:text-xs">
             <span className="inline-flex items-center gap-1.5 text-slate-300">
               <MapPin className="w-3.5 h-3.5 text-[#38BDF8]" />
-              <span className="font-medium text-white">Siège :</span> {COMPANY_INFO.address}
+              <span className="font-medium text-white">{t('topbar.headquarters')}</span> {companyInfo.address}
             </span>
             <span className="hidden md:inline-flex items-center gap-1.5 text-slate-400 border-l border-slate-700 pl-4">
               <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-              RCCM : <span className="text-slate-200">{COMPANY_INFO.rccm}</span>
+              {t('topbar.rccm')} <span className="text-slate-200">{companyInfo.rccm}</span>
             </span>
           </div>
 
-          {/* Quick Direct Communication */}
-          <div className="flex items-center gap-4 text-[11px] sm:text-xs">
+          {/* Quick Direct Communication & Topbar Language Toggle */}
+          <div className="flex items-center gap-3 sm:gap-4 text-[11px] sm:text-xs">
             <a 
-              href={`tel:${COMPANY_INFO.phone1Raw}`}
+              href={`tel:${companyInfo.phone1Raw}`}
               className="inline-flex items-center gap-1.5 hover:text-white transition-colors"
             >
               <Phone className="w-3 h-3 text-[#38BDF8]" />
-              <span className="font-semibold text-slate-100">{COMPANY_INFO.phone1}</span>
+              <span className="font-semibold text-slate-100">{companyInfo.phone1}</span>
             </a>
 
             <a 
-              href={`mailto:${COMPANY_INFO.email}`}
+              href={`mailto:${companyInfo.email}`}
               className="hidden lg:inline-flex items-center gap-1.5 hover:text-white transition-colors border-l border-slate-700 pl-4"
             >
               <Mail className="w-3 h-3 text-[#38BDF8]" />
-              <span>{COMPANY_INFO.email}</span>
+              <span>{companyInfo.email}</span>
             </a>
 
             {/* Direct WhatsApp Quick Chat */}
-            <a
-              href={COMPANY_INFO.whatsappDirectUrl()}
+            <motion.a
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              href={companyInfo.whatsappDirectUrl()}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1.5 bg-[#25D366]/20 hover:bg-[#25D366]/30 text-[#4ADE80] px-2.5 py-0.5 rounded-full font-medium transition-all"
             >
               <MessageSquare className="w-3 h-3" />
-              <span className="hidden sm:inline">WhatsApp Direct</span>
+              <span className="hidden sm:inline">{t('topbar.whatsapp')}</span>
               <span className="sm:hidden">WhatsApp</span>
-            </a>
+            </motion.a>
+
+            {/* Topbar Language Selector */}
+            <div className="border-l border-slate-700 pl-2 sm:pl-3">
+              <LanguageSelector variant="topbar" />
+            </div>
           </div>
         </div>
       </div>
@@ -135,28 +137,36 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenConsultation }) => {
                   </a>
 
                   {/* Dropdown Menu */}
-                  {servicesDropdownOpen && (
-                    <div className="absolute top-full left-0 w-80 bg-white rounded-xl shadow-xl border border-slate-100 p-2.5 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
-                      <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400 px-3 py-1.5 border-b border-slate-100 mb-1">
-                        Les 5 Pôles d'intervention CABEC
-                      </div>
-                      {pillarsSubmenu.map((sub) => (
-                        <a
-                          key={sub.id}
-                          href={`#poles`}
-                          onClick={() => setServicesDropdownOpen(false)}
-                          className="block px-3 py-2 rounded-lg hover:bg-slate-50 transition-colors group/item"
-                        >
-                          <div className="text-sm font-semibold text-slate-800 group-hover/item:text-[#0066B3]">
-                            {sub.title}
-                          </div>
-                          <div className="text-xs text-slate-500 line-clamp-1">
-                            {sub.desc}
-                          </div>
-                        </a>
-                      ))}
-                    </div>
-                  )}
+                  <AnimatePresence>
+                    {servicesDropdownOpen && (
+                      <motion.div 
+                        initial={{ opacity: 0, y: 8 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 8 }}
+                        transition={{ duration: 0.2 }}
+                        className="absolute top-full left-0 w-80 bg-white rounded-xl shadow-xl border border-slate-100 p-2.5 z-50"
+                      >
+                        <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400 px-3 py-1.5 border-b border-slate-100 mb-1">
+                          {t('nav.dropdownTitle')}
+                        </div>
+                        {currentPillars.map((sub) => (
+                          <a
+                            key={sub.id}
+                            href={`#poles`}
+                            onClick={() => setServicesDropdownOpen(false)}
+                            className="block px-3 py-2 rounded-lg hover:bg-slate-50 transition-colors group/item"
+                          >
+                            <div className="text-sm font-semibold text-slate-800 group-hover/item:text-[#0066B3]">
+                              {sub.title}
+                            </div>
+                            <div className="text-xs text-slate-500 line-clamp-1">
+                              {sub.subtitle}
+                            </div>
+                          </a>
+                        ))}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </div>
               ) : (
                 <a
@@ -170,29 +180,33 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenConsultation }) => {
             ))}
           </nav>
 
-          {/* Desktop Right CTA */}
+          {/* Desktop Right CTA + Language Selector */}
           <div className="hidden lg:flex items-center gap-3">
-            <button
+            <LanguageSelector variant="navbar" />
+
+            <motion.button
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
               onClick={() => onOpenConsultation()}
-              className="inline-flex items-center gap-2 bg-[#0066B3] hover:bg-[#005291] text-white text-sm font-semibold px-4.5 py-2.5 rounded-lg shadow-sm hover:shadow transition-all active:scale-[0.98]"
+              className="inline-flex items-center gap-2 bg-[#0066B3] hover:bg-[#005291] text-white text-sm font-semibold px-4.5 py-2.5 rounded-lg shadow-sm hover:shadow transition-all cursor-pointer"
             >
-              <span>Demander une consultation</span>
+              <span>{t('nav.consultationBtn')}</span>
               <ArrowRight className="w-4 h-4" />
-            </button>
+            </motion.button>
           </div>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile Menu Button + Language */}
           <div className="flex items-center gap-2 lg:hidden">
             <button
               onClick={() => onOpenConsultation()}
-              className="bg-[#0066B3] text-white text-xs font-semibold px-3 py-2 rounded-md"
+              className="bg-[#0066B3] text-white text-xs font-semibold px-3 py-2 rounded-md cursor-pointer"
             >
-              Devis
+              {t('nav.quoteBtn')}
             </button>
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 text-slate-700 hover:text-[#0066B3] rounded-lg hover:bg-slate-100"
-              aria-label="Ouvrir le menu"
+              className="p-2 text-slate-700 hover:text-[#0066B3] rounded-lg hover:bg-slate-100 cursor-pointer"
+              aria-label={t('nav.menuAria')}
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
@@ -201,45 +215,65 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenConsultation }) => {
       </div>
 
       {/* Mobile Drawer Menu */}
-      {mobileMenuOpen && (
-        <div className="lg:hidden bg-white border-b border-slate-200 shadow-xl px-4 py-4 space-y-3">
-          <div className="space-y-1">
-            {navItems.map((item) => (
-              <a
-                key={item.label}
-                href={item.href}
-                onClick={() => setMobileMenuOpen(false)}
-                className="block px-3 py-2 text-base font-medium text-slate-800 rounded-lg hover:bg-slate-50 hover:text-[#0066B3]"
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div 
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.25 }}
+            className="lg:hidden bg-white border-b border-slate-200 shadow-xl px-4 py-4 space-y-3 overflow-hidden"
+          >
+            <div className="pb-3 border-b border-slate-100 flex items-center justify-between">
+              <Logo size="sm" variant="full" />
+              <span className="text-[10px] font-bold uppercase tracking-wider text-[#4F8B50] bg-emerald-50 px-2 py-0.5 rounded">
+                Douala, CM
+              </span>
+            </div>
+
+            {/* Mobile Language Switcher */}
+            <LanguageSelector variant="mobile" />
+
+            <div className="space-y-1 pt-1">
+              {navItems.map((item) => (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="block px-3 py-2 text-base font-medium text-slate-800 rounded-lg hover:bg-slate-50 hover:text-[#0066B3]"
+                >
+                  {item.label}
+                </a>
+              ))}
+            </div>
+
+            <div className="pt-3 border-t border-slate-100 flex flex-col gap-2">
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  onOpenConsultation();
+                }}
+                className="w-full flex items-center justify-center gap-2 bg-[#0066B3] text-white font-semibold py-3 rounded-lg text-sm cursor-pointer"
               >
-                {item.label}
+                <span>{t('nav.consultationBtn')}</span>
+                <ArrowRight className="w-4 h-4" />
+              </motion.button>
+
+              <a
+                href={companyInfo.whatsappDirectUrl()}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 rounded-lg text-sm"
+              >
+                <MessageSquare className="w-4 h-4" />
+                <span>{t('topbar.whatsapp')}</span>
               </a>
-            ))}
-          </div>
-
-          <div className="pt-3 border-t border-slate-100 flex flex-col gap-2">
-            <button
-              onClick={() => {
-                setMobileMenuOpen(false);
-                onOpenConsultation();
-              }}
-              className="w-full flex items-center justify-center gap-2 bg-[#0066B3] text-white font-semibold py-3 rounded-lg text-sm"
-            >
-              <span>Demander une consultation</span>
-              <ArrowRight className="w-4 h-4" />
-            </button>
-
-            <a
-              href={COMPANY_INFO.whatsappDirectUrl()}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 rounded-lg text-sm"
-            >
-              <MessageSquare className="w-4 h-4" />
-              <span>Contact direct WhatsApp</span>
-            </a>
-          </div>
-        </div>
-      )}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 };

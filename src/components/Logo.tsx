@@ -32,16 +32,38 @@ export const Logo: React.FC<LogoProps> = ({
     xl: 74
   }[size];
 
+  // Height sizing for the symbol-only image
+  const symbolImgHeightClass = {
+    sm: 'h-8 w-8',
+    md: 'h-11 w-11',
+    lg: 'h-14 w-14',
+    xl: 'h-18 w-18'
+  }[size];
+
   // If using the official uploaded logo image directly and no load error occurred
-  if (useImage && !imgError && variant !== 'symbol-only') {
-    if (isWhite) {
-      // For dark backgrounds (like the footer), frame the official logo in a crisp white badge
+  if (useImage && !imgError) {
+    if (variant === 'symbol-only') {
       return (
         <div className={`inline-flex items-center select-none ${className}`}>
-          <div className="bg-white px-3 py-1.5 rounded-xl shadow-md border border-slate-100/90 transition-transform duration-200 hover:scale-[1.02]">
+          <img
+            src="/cabec-symbol.png"
+            alt="Emblème Arbre et Fleuve - CABECS"
+            className={`${symbolImgHeightClass} object-contain transition-transform duration-200 hover:scale-105`}
+            onError={() => setImgError(true)}
+            referrerPolicy="no-referrer"
+          />
+        </div>
+      );
+    }
+
+    if (isWhite) {
+      // For dark backgrounds (like the footer), frame the official logo in a clean illuminated badge
+      return (
+        <div className={`inline-flex items-center select-none ${className}`}>
+          <div className="bg-white/95 px-3 py-1.5 rounded-xl shadow-md border border-white/20 transition-transform duration-200 hover:scale-[1.02]">
             <img
-              src="/cabec-logo.jpg"
-              alt="Cabinet Belkal Consulting - Conseil, Digital solution, Innovation"
+              src="/cabecs-logo.png"
+              alt="CABECS - Cabinet Belkal Consulting SARLU"
               className={`${imgHeightClass} w-auto object-contain`}
               onError={() => setImgError(true)}
               referrerPolicy="no-referrer"
@@ -54,8 +76,8 @@ export const Logo: React.FC<LogoProps> = ({
     return (
       <div className={`inline-flex items-center select-none ${className}`}>
         <img
-          src="/cabec-logo.jpg"
-          alt="Cabinet Belkal Consulting - Conseil, Digital solution, Innovation"
+          src="/cabecs-logo.png"
+          alt="CABECS - Cabinet Belkal Consulting SARLU"
           className={`${imgHeightClass} w-auto object-contain transition-transform duration-200 hover:scale-[1.02]`}
           onError={() => setImgError(true)}
           referrerPolicy="no-referrer"

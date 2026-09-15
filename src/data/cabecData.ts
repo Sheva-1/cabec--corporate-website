@@ -2,7 +2,7 @@ import { ServicePillar, CaseStudy, FAQItem } from '../types';
 
 export const COMPANY_INFO = {
   legalName: 'CABINET BELKAL CONSULTING SARLU',
-  brandName: 'CABEC',
+  brandName: 'CABECS',
   slogan: 'Conseil • Solutions digitales • Innovation',
   englishSlogan: 'Advisory • Digital Solutions • Innovation',
   address: 'Yassa, Douala, Cameroun',
@@ -19,7 +19,7 @@ export const COMPANY_INFO = {
   workingHours: 'Lundi - Vendredi : 08h00 - 18h00 | Samedi : Sur rendez-vous',
   whatsappDirectUrl: (message?: string) => {
     const text = encodeURIComponent(
-      message || 'Bonjour CABEC, je souhaite obtenir un échange avec vos consultants concernant un projet.'
+      message || 'Bonjour CABECS, je souhaite obtenir un échange avec vos consultants concernant un projet.'
     );
     return `https://wa.me/237697367801?text=${text}`;
   }
@@ -152,7 +152,7 @@ export const SERVICE_PILLARS: ServicePillar[] = [
     subtitle: 'Capital Humain & Montée en Compétences',
     description: 'Programmes de perfectionnement pour cadres, dirigeants et équipes opérationnelles dans les domaines du management, des outils numériques et de la gestion de projets.',
     accentColor: '#0066B3',
-    badge: 'Académie CABEC',
+    badge: 'Académie CABECS',
     services: [
       {
         id: 'form-catalogue',
@@ -235,6 +235,8 @@ export const METHOD_STEPS = [
   }
 ];
 
+export const CASE_STUDIES_LEGAL_DISCLAIMER = "Avis de transparence : Les études de cas ci-après représentent des modèles d'interventions types et méthodologies éprouvées par nos consultants au Cameroun. Les indicateurs sont communiqués à titre indicatif et ne constituent pas une garantie contractuelle systématique pour les projets futurs.";
+
 export const CASE_STUDIES: CaseStudy[] = [
   {
     id: 'case-distrib-douala',
@@ -246,9 +248,9 @@ export const CASE_STUDIES: CaseStudy[] = [
     challenge: 'Les bons de livraison papier étaient perdus ou traités avec 5 jours de décalage, créant des tensions de trésorerie.',
     solution: 'Déploiement d’une application mobile Android offline-first pour les livreurs et chauffeurs couplée à un portail web d’administration en temps réel.',
     results: [
-      '-82% d’erreurs et de litiges de livraison',
-      'Facturation ramenée de 5 jours à 4 heures',
-      'Visibilité GPS temps réel sur 24 véhicules de livraison'
+      'Réduction significative des erreurs et litiges de livraison constatée',
+      'Délai moyen de transmission des bordereaux ramené de 5 jours à 4 heures',
+      'Visibilité GPS opérationnelle sur la flotte de véhicules de distribution'
     ],
     technologiesOrMethods: ['React Native', 'Node.js', 'PostgreSQL', 'Intégration Mobile Money']
   },
@@ -262,9 +264,9 @@ export const CASE_STUDIES: CaseStudy[] = [
     challenge: 'Absence d’indicateurs harmonisés et difficultés à mesurer l’insertion professionnelle réelle des jeunes apprenants.',
     solution: 'Restructuration du cadre logique, formation de 30 coordinateurs de terrain et mise en place d’une plateforme cloud de collecte sécurisée.',
     results: [
-      '100% de données collectées conformes aux exigences du bailleur',
-      'Tableau de bord de gouvernance en temps réel pour le comité de pilotage',
-      'Reconduction du financement pour une phase 2 de 3 ans'
+      'Indicateurs et données collectées conformes aux exigences du cadre bailleur',
+      'Tableau de bord de gouvernance mis à disposition du comité de pilotage',
+      'Évaluation positive permettant l’extension pluriannuelle du programme'
     ],
     technologiesOrMethods: ['Cadre Logique Harmonisé', 'KoboToolbox', 'PowerBI', 'Formation terrain']
   },
@@ -278,9 +280,9 @@ export const CASE_STUDIES: CaseStudy[] = [
     challenge: 'Confusion des rôles, surcharge de la direction générale et marges opérationnelles en baisse de 14%.',
     solution: 'Diagnostic organisationnel complet, refonte de l’organigramme avec fiches de délégation de pouvoir et manuel de procédures internes.',
     results: [
-      '+18% de rentabilité nette en 9 mois',
-      'Délégation effective de 70% des décisions opérationnelles',
-      'Zéro litige prud’homal grâce aux contrats réalignés OHADA'
+      'Optimisation documentée des coûts de fonctionnement et des marges',
+      'Délégation formalisée des décisions opérationnelles vers les cadres relais',
+      'Sécurisation contractuelle et alignement sur les normes sociales OHADA'
     ],
     technologiesOrMethods: ['Audit organisationnel 360°', 'Manuel de procédures OHADA', 'Balanced Scorecard']
   },
@@ -295,8 +297,8 @@ export const CASE_STUDIES: CaseStudy[] = [
     solution: 'Audit juridique des titres, coordination avec le cadastre et le notariat, et montage du dossier de permis de construire.',
     results: [
       'Titre foncier individuel net et purgé de tout privilège obtenu',
-      'Gain de 3 mois sur le calendrier initial de transaction',
-      'Économie de 15% sur les frais d’acquisition négociés'
+      'Anticipation et respect strict du calendrier de due diligence notariale',
+      'Optimisation des frais et conditions d’acquisition pour les investisseurs'
     ],
     technologiesOrMethods: ['Audit Titre Foncier', 'Expertise notariale', 'Due diligence juridique']
   }
@@ -305,8 +307,8 @@ export const CASE_STUDIES: CaseStudy[] = [
 export const FAQ_ITEMS: FAQItem[] = [
   {
     category: 'Général',
-    question: 'Quelle est la valeur ajoutée de CABEC par rapport à d’autres cabinets ?',
-    answer: 'CABEC (Cabinet Belkal Consulting SARLU) combine une triple expertise rare : le conseil stratégique de direction, l’ingénierie logicielle concrète et l’ancrage territorial fort à Douala. Contrairement aux cabinets généralistes qui ne produisent que des rapports théoriques, nous développons nous-mêmes les outils technologiques et formons vos équipes pour garantir des résultats chiffrés.'
+    question: 'Quelle est la valeur ajoutée de CABECS par rapport à d’autres cabinets ?',
+    answer: 'CABECS (Cabinet Belkal Consulting SARLU) combine une triple expertise rare : le conseil stratégique de direction, l’ingénierie logicielle concrète et l’ancrage territorial fort à Douala. Contrairement aux cabinets généralistes qui ne produisent que des rapports théoriques, nous développons nous-mêmes les outils technologiques et formons vos équipes pour garantir des résultats chiffrés.'
   },
   {
     category: 'Intervention',
@@ -325,7 +327,7 @@ export const FAQ_ITEMS: FAQItem[] = [
   },
   {
     category: 'Formation',
-    question: 'Les formations de l’Académie CABEC sont-elles éligibles au plan de formation des entreprises ?',
+    question: 'Les formations de l’Académie CABECS sont-elles éligibles au plan de formation des entreprises ?',
     answer: 'Oui. En tant que cabinet régulièrement enregistré au RCCM (2026-B13-00621) et disposant d’un numéro fiscal (M072618899069X), nos factures de formation professionnelle sont fiscalement déductibles dans le cadre de la politique de renforcement des compétences de votre entreprise.'
   }
 ];

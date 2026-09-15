@@ -1,6 +1,6 @@
 {
-  "name": "CABEC - Cabinet Belkal Consulting",
-  "description": "Site officiel de CABINET BELKAL CONSULTING SARLU à Douala, Cameroun. Conseil en management & stratégie, solutions digitales & informatiques, formations professionnelles et immobilier d'entreprise.",
+  "name": "CABECS | Cabinet Belkal Consulting SARLU - Conseil, Solutions Digitales & Innovation Douala",
+  "description": "Cabinet Belkal Consulting SARLU (CABECS) à Douala, Cameroun. Conseil en management & stratégie, développement de solutions digitales, formations professionnelles et immobilier d'entreprise en Afrique centrale.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }
